@@ -1,3 +1,6 @@
+
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -7,14 +10,58 @@
  *
  * @author acer
  */
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class registration extends javax.swing.JFrame {
 
     /**
      * Creates new form registration
      */
     public registration() {
-        initComponents();
+        try {
+            initComponents();
+            Connection();
+        } catch (SQLException ex) {
+            Logger.getLogger(registration.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+    //connection method
+    Connection con;
+    //SQl
+    Statement st;
+    
+    //Required for connections
+    //DBname, Driver, URL, Username, Password
+    private static final String DbName = "sales";
+    private static final String DbDriver = "com.mysql.cj.jdbc.Driver";
+    private static final String DbUrl = "jdbc:mysql://localhost:3306/"+DbName;
+    private static final String DbUsername = "root";
+    private static final String DbPassword = "";
+    
+    //Create a method for connection
+    
+   public void Connection() throws SQLException {
+        try {
+            Class.forName(DbDriver);
+            //url, username, password
+            con = DriverManager.getConnection(DbUrl, DbUsername, DbPassword);
+            st = con.createStatement();
+            if (con != null) {
+                System.out.println("Connection Successful");  
+            }
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    }
+}
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,8 +79,9 @@ public class registration extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtRegUsername = new javax.swing.JTextField();
         txtRegPassword = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButtonSub1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jButtonLog2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,21 +110,39 @@ public class registration extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Password");
 
+        txtRegUsername.setBackground(new java.awt.Color(255, 255, 255));
+        txtRegUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRegUsernameActionPerformed(evt);
+            }
+        });
+
+        txtRegPassword.setBackground(new java.awt.Color(255, 255, 255));
         txtRegPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRegPasswordActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jButton1.setText("Submit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSub1.setBackground(new java.awt.Color(255, 51, 51));
+        jButtonSub1.setText("Submit");
+        jButtonSub1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonSub1ActionPerformed(evt);
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Already Have an Account");
+
+        jButtonLog2.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonLog2.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonLog2.setText("Login");
+        jButtonLog2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLog2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -86,7 +152,7 @@ public class registration extends javax.swing.JFrame {
                 .addContainerGap(103, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jButtonSub1)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -95,7 +161,9 @@ public class registration extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonLog2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -120,11 +188,13 @@ public class registration extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtRegPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel4)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonSub1)
+                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jButtonLog2))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,9 +225,20 @@ public class registration extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRegPasswordActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonSub1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSub1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String username, password;
+        if ("".equals(txtRegUsername.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(), "required user name");
+    }//GEN-LAST:event_jButtonSub1ActionPerformed
+}
+    private void jButtonLog2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLog2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonLog2ActionPerformed
+
+    private void txtRegUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRegUsernameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,7 +276,8 @@ public class registration extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonLog2;
+    private javax.swing.JButton jButtonSub1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
