@@ -229,9 +229,13 @@ public class registration extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username, password;
         if ("".equals(txtRegUsername.getText())) {
-            JOptionPane.showMessageDialog(new JFrame(), "required user name");
+            JOptionPane.showMessageDialog(new JFrame(), "required Username");
+    }
+        if ("".equals(txtRegPassword.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(), "required password");
+    }
     }//GEN-LAST:event_jButtonSub1ActionPerformed
-}
+
     private void jButtonLog2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLog2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonLog2ActionPerformed
