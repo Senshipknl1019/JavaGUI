@@ -234,6 +234,21 @@ public class registration extends javax.swing.JFrame {
         if ("".equals(txtRegPassword.getText())) {
             JOptionPane.showMessageDialog(new JFrame(), "required password");
     }
+        else {
+            username = txtRegUsername.getText();
+            password = txtRegPassword.getText();
+            
+            String queryRegister = "INSERT into accdetails(accUsername, accPassword)"
+                    +"VALUES ("+username+","+password+")";
+            try {
+                st.execute(queryRegister);
+            } catch (SQLException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(new JFrame(), "data added successfully");
+            txtRegUsername.setText(" ");
+            txtRegPassword.setText(" ");
+        }
     }//GEN-LAST:event_jButtonSub1ActionPerformed
 
     private void jButtonLog2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLog2ActionPerformed
@@ -291,5 +306,11 @@ public class registration extends javax.swing.JFrame {
     private javax.swing.JTextField txtRegPassword;
     private javax.swing.JTextField txtRegUsername;
     // End of variables declaration//GEN-END:variables
+
+    private static class Registration {
+
+        public Registration() {
+        }
+    }
 }
 
