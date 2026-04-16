@@ -221,10 +221,6 @@ public class registration extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtRegPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRegPasswordActionPerformed
-
     private void jButtonSub1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSub1ActionPerformed
         // TODO add your handling code here:
         String username, password;
@@ -263,6 +259,10 @@ public class registration extends javax.swing.JFrame {
     private void txtRegUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRegUsernameActionPerformed
+
+    private void txtRegPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRegPasswordActionPerformed
 
     /**
      * @param args the command line arguments
