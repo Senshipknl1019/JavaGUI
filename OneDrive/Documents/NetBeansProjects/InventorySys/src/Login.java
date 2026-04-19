@@ -237,6 +237,11 @@ public class Login extends javax.swing.JFrame {
 
     private void jButtonLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogActionPerformed
         // TODO add your handling code here:
+        Dashboard dashboard = new Dashboard();
+        dashboard.setVisible(true);
+        dashboard.pack();
+        dashboard.setLocationRelativeTo(null);
+        this.dispose();
         String username, password;
         username = txtLogUsername.getText();
         password = txtLogPassword.getText();

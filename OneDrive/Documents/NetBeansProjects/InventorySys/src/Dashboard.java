@@ -99,7 +99,7 @@ public void showAccounts() {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -194,6 +194,11 @@ public void showAccounts() {
         jButton3Delete.setBackground(new java.awt.Color(255, 255, 255));
         jButton3Delete.setForeground(new java.awt.Color(0, 0, 0));
         jButton3Delete.setText("Delete");
+        jButton3Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3DeleteActionPerformed(evt);
+            }
+        });
 
         jButtonAdd.setBackground(new java.awt.Color(255, 255, 255));
         jButtonAdd.setForeground(new java.awt.Color(0, 0, 0));
@@ -257,9 +262,9 @@ public void showAccounts() {
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonUpdate)
                     .addComponent(jButton3Delete))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(144, 144, 144))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -279,14 +284,12 @@ public void showAccounts() {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)))
         );
 
         pack();
@@ -294,6 +297,12 @@ public void showAccounts() {
 
     private void jButton1LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1LogoutActionPerformed
         // TODO add your handling code here:
+         Login login = new Login();
+        login.setVisible(true);
+        login.pack();
+        login.setLocationRelativeTo(null);
+        this.dispose();
+             
     }//GEN-LAST:event_jButton1LogoutActionPerformed
 
     private void idnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idnumActionPerformed
@@ -310,6 +319,85 @@ public void showAccounts() {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
+        {                                        
+    // 1. Get the data from your text fields
+    String id = idnum.getText();
+    String firstName = fname.getText();
+    String lastName = lname.getText();
+
+    // 2. Simple Validation: Don't allow empty fields
+    if
+ (id.isEmpty() || firstName.isEmpty() || lastName.isEmpty()) {
+        JOptionPane.showMessageDialog(
+this, "All fields are required!"
+);
+        return
+;
+    }
+
+    // 3. Database Operation
+    try
+ {
+        // Connect to the DB
+        Connection con = DBConnection.getConnection();
+        
+        if (con != null
+) {
+            // SQL query to insert into your 'students' table
+            String sql = 
+"INSERT INTO students (student_id, firstname, lastname) VALUES (?, ?, ?)"
+;
+            PreparedStatement pst = con.prepareStatement(sql);
+            
+            // Link the variables to the '?' in the SQL string
+            pst.setString(
+1
+, id);
+            pst.setString(
+2
+, firstName);
+            pst.setString(
+3
+, lastName);
+
+            int
+ result = pst.executeUpdate();
+
+            if (result > 0
+) {
+                JOptionPane.showMessageDialog(
+this, "Student added successfully!"
+);
+                
+                // Clear the text fields for the next entry
+                idnum.setText(
+""
+);
+                fname.setText(
+""
+);
+                lname.setText(
+""
+);
+                
+                // Refresh the table so the new student appears
+                showAccounts(); 
+            }
+        } 
+else
+ {
+            JOptionPane.showMessageDialog(
+this, "Connection failed. Check XAMPP/MySQL."
+);
+        }
+    } 
+catch
+ (Exception e) {
+        JOptionPane.showMessageDialog(
+this, "Error: "
+ + e.getMessage());
+}
+}
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
@@ -350,6 +438,53 @@ public void showAccounts() {
         JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
     }
     }//GEN-LAST:event_jButtonUpdateActionPerformed
+
+    private void jButton3DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3DeleteActionPerformed
+        // TODO add your handling code here:
+        {                                           
+    int opt = JOptionPane.showConfirmDialog(null, "Permanently delete this student?", "Delete", JOptionPane.YES_NO_OPTION);
+
+    if (opt == 0
+) { 
+        try
+ {
+            Connection con = DBConnection.getConnection();
+            // Delete from students using the ID Number field
+            String sql = 
+"DELETE FROM students WHERE student_id = ?"
+;
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(
+1
+, idnum.getText());
+            
+            int
+ deleted = pst.executeUpdate();
+            if (deleted > 0
+) {
+                JOptionPane.showMessageDialog(
+null, "Student Deleted Successfully."
+);
+                showAccounts(); 
+// Refresh the table automatically
+            } 
+else
+ {
+                JOptionPane.showMessageDialog(
+null, "ID Number not found."
+);
+            }
+        } 
+catch
+ (Exception e) {
+            JOptionPane.showMessageDialog(
+null, "Delete Error: "
+ + e.getMessage());
+        }
+    }
+}
+        
+    }//GEN-LAST:event_jButton3DeleteActionPerformed
 
     /**
      * @param args the command line arguments
